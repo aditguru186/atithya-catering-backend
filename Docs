@@ -1,0 +1,249 @@
+Docs:
+********************************************************** DOCS Description ********************************************************** 
+Waterfall Model:
+1. Requirement Analysis
+2. System Design
+3. Implementation
+4. Testing
+5. Deployment
+6. Maintenance
+
+1. Requirement Analysis
+- [ ] Customer Acquiring Management
+- [ ] Inventory Management
+- [ ] Purchase Management
+- [ ] Event Management
+- [ ] Order Management
+
+Customer Acquiring Management:
+- Getting hold of a customer
+- Acquire Customer details and event details
+- Present order for them to choose from
+- Present menu for them to choose from
+- Present total cost
+- Present payment options
+
+Inventory Management:
+- [ ] Add Items
+- [ ] Update Items
+- [ ] Delete Items
+- [ ] View Items
+- [ ] Search Items
+- Tabular view of item with sorting based on names and quantity
+
+Purchase Management:
+- [ ] Add Purchase
+- [ ] Update Purchase
+- [ ] Delete Purchase
+- [ ] View Purchase
+- [ ] Search Purchase
+- Purchase made from which vendor and which Items
+
+Event Management:
+- [ ] Add Event
+- [ ] Update Event
+- [ ] Delete Event
+- [ ] View Event
+- [ ] Search Event
+- Event details with customer details and event details
+- Costing of event
+- Food Item list
+- Event status
+- Event number of guests 
+- predict percentage usage of items and remaining items 
+
+Order Management:
+- [ ] Add Order
+- [ ] Update Order
+- [ ] Delete Order
+- [ ] View Order
+- [ ] Search Order
+- Make order with combination of all items from the  item list
+- Anticipate the Cost for the order owing to the number of guests attending the event
+- Present the order to the customer for confirmation
+- Present the total cost of the order and sales for the order
+
+2. System Design
+- [ ] Database Design
+- [ ] UI Design
+- [ ] API Design
+- [ ] Security Design
+- [ ] Deployment Design
+
+1. System Architecture
+A. Architectural Pattern
+Microservices (Recommended for Scalability): Each module (Customer, Inventory, Order, Event, etc.) will have its own service with independent APIs.
+Modular Monolithic (Simpler for MVP): A single backend where modules interact internally but remain loosely coupled.
+B. Technology Stack
+Backend Framework: Node.js (Express/NestJS) or Django/FastAPI for Python
+Database: PostgreSQL / MongoDB (depending on relational needs)
+Authentication: JWT-based authentication with role-based access control (RBAC)
+Caching: Redis for optimizing performance
+Queue Management: RabbitMQ/Kafka for asynchronous event handling
+Storage: AWS S3 / Cloudinary for media uploads
+2. Database Design
+The system will follow a normalized relational schema for transactional data while maintaining some denormalized views for performance optimization.
+
+A. Tables & Relationships
+User Management (RBAC-based)
+
+Users → Contains user credentials and roles.
+Roles → Defines system roles and permissions.
+Customer & Events
+
+Customers → Stores customer details.
+Events → Linked to a customer_id, contains event details.
+Inventory & Purchases
+
+Inventory → Stores item stock levels.
+Purchases → Tracks vendor purchases and inventory additions.
+Order Management
+
+Orders → Stores all event orders with cost breakdowns.
+Menu/Packages → Stores predefined menu selections for events.
+B. Entity Relationship Diagram (ERD)
+A detailed ERD will define the relationships between tables, including:
+
+One-to-Many (e.g., Customer to Event)
+Many-to-Many (e.g., Orders and Items via a junction table)
+3. API Design
+Each module will have a set of RESTful API endpoints:
+
+A. Authentication & User Management
+POST /auth/register
+POST /auth/login
+GET /users
+PUT /users/:id
+DELETE /users/:id
+B. Customer & Event Management
+POST /customers
+GET /customers/:id
+PUT /customers/:id
+DELETE /customers/:id
+POST /events
+GET /events/:id
+PUT /events/:id
+DELETE /events/:id
+C. Inventory & Purchase Management
+POST /inventory
+GET /inventory
+PUT /inventory/:id
+DELETE /inventory/:id
+POST /purchases
+GET /purchases
+PUT /purchases/:id
+DELETE /purchases/:id
+D. Order & Menu Management
+POST /orders
+GET /orders/:id
+PUT /orders/:id
+DELETE /orders/:id
+POST /menu
+GET /menu
+PUT /menu/:id
+DELETE /menu/:id
+4. Security Design
+JWT Authentication: Secure API access with token-based authentication.
+Role-Based Access Control (RBAC): Restrict actions based on user roles.
+Rate Limiting: Prevent API abuse using middleware (e.g., Express Rate Limit).
+Encryption: Hash sensitive information such as passwords.
+Input Validation: Use validation libraries to prevent SQL injection & XSS.
+5. Deployment Design
+Containerization: Docker & Kubernetes for scalability.
+CI/CD Pipeline: GitHub Actions / Jenkins for automated deployment.
+
+
+********************************************************** MODELS ********************************************************** 
+Models: 
+
+USERS:
+{
+    user_id,
+    role,
+    name,
+    department,
+    username, 
+    password
+}
+CUSTOMER:
+{
+    customer_id,
+    customer_name, 
+    customer_contact,
+    customer_email,
+    customer_address,
+    event_date,
+    payment_status,
+    payment_total,
+    payment_remnant
+
+}
+ROLE:
+{
+    - [ ] Super Admin
+    - [ ] Store
+    - [ ] f&b manager
+    - [ ] f&b controller
+    - [ ] party kitchen 
+    - [ ] accounts
+}
+
+PURCHASE:
+{
+    purchase_id,
+    item_name, 
+    item_id, 
+    quantity, 
+    vendor,
+    total,
+    paid, 
+    remnant
+}
+
+INVENTORY:
+{
+    item_name,
+    item_id, 
+    item_quantity   
+}
+
+EVENT:
+{
+    event_id,
+    customer_id,
+    event_name,
+    event_date,
+    event_time,
+    event_location,
+    event_type,
+    event_theme,
+    event_guests,
+    event_budget,
+    event_status,
+    event_food_menu
+}
+
+MENU/PACKAGE:
+{
+    menu_id,
+    menu_name,
+    menu_items: ITEM[],
+    menu_price
+}
+
+ITEM:
+{
+    item_id,
+    item_name,
+    item_price,
+    item_quantity
+}
+
+ORDER:
+{
+    order_id,
+    event_id,
+    order_items: ITEM[],
+    order_total,
+}
+
