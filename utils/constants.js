@@ -1,0 +1,15 @@
+const ROLE = {
+    SUPER_ADMIN: 'SUPER_ADMIN',
+    STORE: 'STORE',
+    FB_MANAGER: 'FB_MANAGER',
+    FB_CONTROLLER: 'FB_CONTROLLER',
+    PARTY_KITCHEN: 'PARTY_KITCHEN',
+    ACCOUNTS: 'ACCOUNTS'
+};
+
+const VALID_ROLES = Object.values(ROLE);
+
+module.exports = {
+    ROLE,
+    VALID_ROLES
+};
